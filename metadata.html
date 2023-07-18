@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #cover {
+                width: 275px;
+                height: 275px;
+                border: 1px solid black;
+                background-size: cover;
+                background-position: center;
+            }
+        </style>
+    </head>
+<body>
+<div class="p-0 m-0 flex justify-center align-center h-100vh">
+    <input type='file' id='input' accept=".mp3, .wav"></input>
+    <div id="cover" class="w-275px h-275px border-black bg-cover"></div>
+    <p id="title"></p>
+    <p id="author"></p>
+    <p id="album"></p>
+    <p id="genre"></p>
+</div>
+
+<script src="./jsmediatags-master/dist/jsmediatags.min.js"></script>
+<script>
+document.querySelector("#input").addEventListener("change", (event) => {
+    const file = event.target.files[0];
+
+    jsmediatags.read(file, {
+        onSuccess: function(tag) {
+            const data = tag.tags.picture.data;
+            const format = tag.tags.picture.format;
+            let base64String = "";
+
+            for (let i = 0; i < data.length; i++)
+                base64String += String.fromCharCode(data[i]);
+
+            document.querySelector("#cover").style.backgroundImage = `url(data:${format};base64,${window.btoa(base64String)})`;
+            document.querySelector("#title").textContent = tag.tags.title;
+            document.querySelector("#author").textContent = tag.tags.artist;
+            document.querySelector("#album").textContent = tag.tags.album;
+            document.querySelector("#genre").textContent = tag.tags.genre;
+        },
+        onError: function(error) {
+            console.log(error);
+        }
+    });
+});
+</script>
+</body>
+</html>
