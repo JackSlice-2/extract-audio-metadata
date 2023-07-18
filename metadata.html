@@ -2,23 +2,42 @@
 <html>
     <head>
         <style>
+            body {
+                align-items: center;
+                background-color: lightblue;
+                display: flex;
+                justify-content: center;
+            }
+            #input {
+                padding: 20px;
+                color: white;
+                background-color: blue;
+                border: 2px solid black;
+            }
             #cover {
                 width: 275px;
                 height: 275px;
-                border: 1px solid black;
                 background-size: cover;
                 background-position: center;
+                border: 2px solid black;
+            }
+            #box {
+                padding: 5px;
             }
         </style>
     </head>
 <body>
-<div class="p-0 m-0 flex justify-center align-center h-100vh">
+<div class="justify-center align-center h-100vh">
     <input type='file' id='input' accept=".mp3, .wav"></input>
     <div id="cover" class="w-275px h-275px border-black bg-cover"></div>
-    <p id="title"></p>
-    <p id="author"></p>
-    <p id="album"></p>
-    <p id="genre"></p>
+    <div id="box">
+        <li>Title: <p id="title"></p></li>
+        <li>Artist: </p><p id="author"></li>
+        <li>Album: </p><p id="album"></li>
+        <li>Genre: </p><p id="genre"></li>
+        <li>Year: </p><p id="year"></li>
+
+    </div>
 </div>
 
 <script src="./jsmediatags-master/dist/jsmediatags.min.js"></script>
@@ -40,6 +59,12 @@ document.querySelector("#input").addEventListener("change", (event) => {
             document.querySelector("#author").textContent = tag.tags.artist;
             document.querySelector("#album").textContent = tag.tags.album;
             document.querySelector("#genre").textContent = tag.tags.genre;
+            document.querySelector("#year").textContent = tag.tags.year;
+
+
+
+
+            
         },
         onError: function(error) {
             console.log(error);
